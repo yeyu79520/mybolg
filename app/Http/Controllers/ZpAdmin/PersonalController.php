@@ -6,9 +6,11 @@ use App\Entities\User;
 use App\Entities\Category;
 use Illuminate\Http\Request;
 use EndaEditor;
-
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\CategoryRequest;
+use App\Http\Requests\ArticleRequest;
+use App\Entities\Article;
 class PersonalController extends Controller{
     public $user;
     /***判断是否登录*******/
@@ -62,6 +64,9 @@ class PersonalController extends Controller{
         $res = $request->all();
         unset($res['_token']);
         if($category->create($res)){
+            $cates = $category->GetCategoryAll();
+            $cate = serialize($cates->toArray());
+             Cache::forever('category',$cate);
             return redirect('yeyu/personal/classifylist')->with('status', '添加成功');
         }else{
             return redirect()->back()->withInput()->withErrors('添加失败');
@@ -96,6 +101,9 @@ class PersonalController extends Controller{
         );
         $id  = $request->get('id');
         $one = $category->GetCategoryOne($id);
+        if(empty($one)){
+            return redirect()->back()->withInput()->withErrors('没有该类id');
+        }
         return view('zpadmin.personal.editclassify',['one'=>$one]);
 
     }
@@ -120,9 +128,23 @@ class PersonalController extends Controller{
      * @copyright 201６-201８ MIS misrobot.com Inc. All Rights Reserved
      */
     public function Addcontent(){
-        return view('zpadmin.personal.addcontent');
+        $category = unserialize(Cache::get('category'));
+        if(empty($category)){
+            return redirect('yeyu/personal/classifylist')->with('status', '请添加分类');
+        }
+        return view('zpadmin.personal.addcontent',['category'=>$category]);
     }
 
+    public function HandleAddcontent(ArticleRequest $request,Article $article){
+        $res = $request->all();
+
+        unset($res['_token']);
+        if($article->create($res)){
+            return redirect('yeyu/personal/classifylist')->with('status', '添加成功');
+        }else{
+            return redirect()->back()->withInput()->withErrors('添加失败');
+        }
+    }
 
     /**
      * @method  文件上传图片
@@ -143,6 +165,50 @@ class PersonalController extends Controller{
 
     }
 
+    /**
+     * @method  文章列表
+     * @url /laboratory/
+     * @access public
+     * @author zhongpeng
+     * @date
+     * @copyright 201６-201８ M Inc. All Rights Reserved
+     */
+    public function Articlelist(Article $article){
+        $articles = $article->getArticleAll();
+        $articles = $articles->toArray();
+        return view('zpadmin.personal.articlelist',['articles'=>$articles]);
+  }
+
+    /**
+     * @method 修改文章
+     * @url /laboratory/
+     * @access public
+     * @param Request $request
+     * @param Article $article
+     * @author zhongpeng
+     * @date
+     * @copyright 201６-201８ M Inc. All Rights Reserved
+     */
+    public function EditArticle(Request $request, Article $article){
+        $this->validate($request,
+            [
+                'id'   => 'required|integer',
+            ],
+            [
+                'id.required'   => '数据不合法',
+                'id.integer'   => '数据不合法',
+            ]
+        );
+        $category = unserialize(Cache::get('category'));
+        $one = $article->getArticleOne($request->get('id'));
+        $one->content = EndaEditor::MarkDecode($one->content);
+       // $one->content  =htmlentities($one->content);
+        //dd($one);
+       
+        return view('zpadmin.personal.editarticle',['one'=>$one,'category'=>$category]);
+        
+        
+    }
 
 
 

@@ -29,7 +29,11 @@ Route::group(['namespace' => 'ZpAdmin','prefix' => 'yeyu','middleware'=>'auth'],
     Route::get('personal/editclassify',['as' => 'personal.editclassify', 'uses' => 'PersonalController@Editclassify']);
     Route::post('personal/handle_editclassify',['as' => 'personal.handle_editclassify', 'uses' => 'PersonalController@HandleEditclassify']);
     Route::get('personal/addcontent',['as' => 'personal.addcontent', 'uses' => 'PersonalController@Addcontent']);
+    Route::post('personal/handle_addcontent',['as' => 'personal.handle_addcontent', 'uses' => 'PersonalController@HandleAddcontent']);
+    
     Route::post('personal/upload',['as' => 'personal.upload', 'uses' => 'PersonalController@upload']);
+    Route::get('personal/articlelist',['as' => 'personal.articlelist', 'uses' => 'PersonalController@Articlelist']);
+    Route::get('personal/editarticle',['as' => 'personal.editarticle', 'uses' => 'PersonalController@EditArticle']);
 
 
 });

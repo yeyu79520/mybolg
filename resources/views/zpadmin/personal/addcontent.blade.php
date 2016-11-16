@@ -8,7 +8,22 @@
         <div class="panel admin-panel">
             <div class="panel-head" id="add"><strong><span class="icon-pencil-square-o"></span>增加内容</strong></div>
             <div class="body-content">
-                <form method="post" class="form-x" action="">
+                <form method="post" class="form-x" action="{{route('personal.handle_addcontent')}}">
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    <div class="form-group">
+                            <div class="label">
+                                <label style="font-size:10pt;">分类标题：</label>
+                            </div>
+                            <div class="field">
+                                <select name="cid" class="input w50">
+                                    <option value="">请选择分类</option>
+                                    @foreach($category as $val)
+                                        <option value="{{$val['id']}}">{{$val['title']}}</option>
+                                    @endforeach
+                                </select>
+                                <div class="tips"></div>
+                            </div>
+                        </div>
                     <div class="form-group">
                         <div class="label">
                             <label style="font-size:10pt;">标题：</label>
@@ -18,29 +33,14 @@
                             <div class="tips"></div>
                         </div>
                     </div>
-                    <div class="form-group">
-                            <div class="label">
-                                <label style="font-size:10pt;">分类标题：</label>
-                            </div>
-                            <div class="field">
-                                <select name="cid" class="input w50">
-                                    <option value="">请选择分类</option>
-                                    <option value="">产品分类</option>
-                                    <option value="">产品分类</option>
-                                    <option value="">产品分类</option>
-                                    <option value="">产品分类</option>
-                                </select>
-                                <div class="tips"></div>
-                            </div>
-                        </div>
                         <div class="form-group">
                             <div class="label">
                                 <label style="font-weight: normal; font-size:10pt">其他属性：</label>
                             </div>
                             <div class="field" style="padding-top:8px;">
-                                首页 <input id="ishome"  type="checkbox" />
-                                推荐 <input id="isvouch"  type="checkbox" />
-                                置顶 <input id="istop"  type="checkbox" />
+                                首页 <input id="ishome"   name="attribute" type="radio" value="0" />
+                                推荐 <input id="isvouch"  name="attribute" type="radio" value="1"/>
+                                置顶 <input id="istop"    name="attribute" type="radio" value="2"/>
 
                             </div>
                     </div>
@@ -51,7 +51,7 @@
                         </div>
                         <div class="field">
                             {{--<textarea name="content" class="input" style="height:450px; border:1px solid #ddd;"></textarea>--}}
-                            <textarea id='myEditor'></textarea>
+                            <textarea id='myEditor' name="content"></textarea>
                             <div class="tips"></div>
                         </div>
                     </div>
@@ -62,34 +62,10 @@
                             <label style="font-weight: normal;font-size:10pt">关键字标题：</label>
                         </div>
                         <div class="field">
-                            <input type="text" class="input" name="s_title" value="" />
+                            <input type="text" class="input" name="key" value="" />
                         </div>
                     </div>
-                    <div class="form-group">
-                        <div class="label">
-                            <label style="font-weight: normal; font-size:10pt;">内容关键字：</label>
-                        </div>
-                        <div class="field">
-                            <input type="text" class="input" name="s_keywords" value=""/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="label">
-                            <label style="font-weight: normal; font-size:10pt;">关键字描述：</label>
-                        </div>
-                        <div class="field">
-                            <textarea type="text" class="input" name="s_desc" style="height:80px;"></textarea>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="label">
-                            <label style="font-weight: normal; font-size:10pt;" >排序：</label>
-                        </div>
-                        <div class="field">
-                            <input type="text" class="input w50" name="sort" value="0"  data-validate="number:排序必须为数字" />
-                            <div class="tips"></div>
-                        </div>
-                    </div>
+
 
 
                     <div class="form-group">

@@ -12,7 +12,7 @@
     <h2><span class="icon-pencil-square-o"></span>栏目管理</h2>
     <ul style="display:block">
         <li><a href="{{route('personal.classifylist')}}" @if(getCurrentAction()['method'] == 'Classifylist' || getCurrentAction()['method'] == 'Addclassify' || getCurrentAction()['method'] == 'Editclassify')  class ='on' @endif ><span class="icon-caret-right "></span>分类管理</a></li>
-        <li><a href="list.html" target="right"><span class="icon-caret-right"></span>内容管理</a></li>
+        <li><a href="{{route('personal.articlelist')}}"   @if(getCurrentAction()['method'] == 'Articlelist')  class ='on' @endif><span class="icon-caret-right"></span>内容管理</a></li>
         <li><a href="{{route('personal.addcontent')}}"  @if(getCurrentAction()['method'] == 'Addcontent')  class ='on' @endif><span class="icon-caret-right"></span>添加内容</a></li>
 
     </ul>
