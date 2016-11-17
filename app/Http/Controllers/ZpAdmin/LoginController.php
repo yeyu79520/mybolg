@@ -23,6 +23,17 @@ class LoginController extends Controller{
 //    User::create($tes);
       return   view( 'zpadmin.login.login');
     }
+
+    /**
+     * @method
+     * @url /laboratory/    登录处理
+     * @access public
+     * @param Request $request
+     * @return mixed
+     * @author zhongpeng <zhongpeng@misrobot.com>
+     * @date
+     * @copyright 201６-201８ MIS misrobot.com Inc. All Rights Reserved
+     */
     public function loginop(Request $request){
 
         $name =$request->get('name');
@@ -41,6 +52,18 @@ class LoginController extends Controller{
        }
 
     }
+
+    /**
+     * @method
+     * @url /laboratory/ 登录验证
+     * @access public
+     * @param $name
+     * @param $password
+     * @return bool
+     * @author zhongpeng <zhongpeng@misrobot.com>
+     * @date
+     * @copyright 201６-201８ MIS misrobot.com Inc. All Rights Reserved
+     */
     public function verify($name, $password)
     {
         if(strlen($name)<3 || strlen($password)<6)
@@ -60,6 +83,12 @@ class LoginController extends Controller{
             return false;
         }
     }
+    public function Loginout(){
+        Auth::logout();
+        return redirect()->route('yeyu.login');
+        
+    }
+
 
 }
 

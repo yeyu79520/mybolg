@@ -44,5 +44,5 @@ Route::group(['namespace' => 'ZpAdmin','prefix' => 'yeyu'], function()
 {
     Route::get('/login',['as' => 'yeyu.login', 'uses' => 'LoginController@login']);
     Route::post('/loginop',['as' => 'yeyu.loginop', 'uses' => 'LoginController@loginop']);
-    
+    Route::get('/loginout',['as' => 'yeyu.loginout', 'uses' => 'LoginController@loginout']);
 });
