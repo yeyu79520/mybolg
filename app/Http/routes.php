@@ -23,6 +23,8 @@ Route::group(['namespace' => 'Test'], function()
 Route::group(['namespace' => 'ZpAdmin','prefix' => 'yeyu','middleware'=>'auth'], function()
 {
     Route::get('personal/index',['as' => 'personal.index', 'uses' => 'PersonalController@index']);
+    Route::post('personal/index',['as' => 'personal.index', 'uses' => 'PersonalController@index']);
+    Route::get('personal/setcache',['as' => 'personal.setcache', 'uses' => 'PersonalController@SetCache']);
     Route::get('personal/classifylist',['as' => 'personal.classifylist', 'uses' => 'PersonalController@Classifylist']);
     Route::get('personal/addclassify',['as' => 'personal.addclassify', 'uses' => 'PersonalController@Addclassify']);
     Route::post('personal/handle_addclassify',['as' => 'personal.handle_addclassify', 'uses' => 'PersonalController@HandleAddclassify']);
@@ -34,6 +36,7 @@ Route::group(['namespace' => 'ZpAdmin','prefix' => 'yeyu','middleware'=>'auth'],
     Route::post('personal/upload',['as' => 'personal.upload', 'uses' => 'PersonalController@upload']);
     Route::get('personal/articlelist',['as' => 'personal.articlelist', 'uses' => 'PersonalController@Articlelist']);
     Route::get('personal/editarticle',['as' => 'personal.editarticle', 'uses' => 'PersonalController@EditArticle']);
+    Route::post('personal/handle_editarticle',['as' => 'personal.handle_editarticle', 'uses' => 'PersonalController@HandleEditArticle']);
 
 
 });

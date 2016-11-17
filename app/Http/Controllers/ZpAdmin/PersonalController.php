@@ -11,12 +11,30 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\CategoryRequest;
 use App\Http\Requests\ArticleRequest;
 use App\Entities\Article;
+use App\Entities\Basic;
 class PersonalController extends Controller{
     public $user;
     /***判断是否登录*******/
     public function  __construct(){
         $this->user = Auth::user();
     }
+
+    /**
+     * @method   设置缓存
+     * @url /laboratory/
+     * @access public
+     * @param Category $category
+     * @author zhongpeng <zhongpeng@misrobot.com>
+     * @date 2016年11月17日11:42:09
+     * @copyright 201６-201８ MIS misrobot.com Inc. All Rights Reserved
+     */
+    public function SetCache(Category $category){
+        $cates = $category->GetCategoryAll();
+        $cate = serialize($cates->toArray());
+        Cache::forever('category',$cate);
+    }
+
+
 
     /**
      * @method  首页中心
@@ -27,8 +45,32 @@ class PersonalController extends Controller{
      * @date
      * @copyright 201６-201８ MIS misrobot.com Inc. All Rights Reserved
      */
-    public function index(){
-         return view('zpadmin.personal.center');
+    public function index(Basic $basic,Request $request){
+         $basics = $basic->first();
+        if($request->isMethod('post')){
+
+            $this->validate($request,
+                [
+                    'title'   => 'required',
+                ],
+                [
+                    'title.required'   => '网站标题必须填写',
+                ]
+            );
+            $res = $request->all();
+            unset($res['_token']);
+            if($basics->update($res)){
+                return redirect('yeyu/personal/index')->with('status', '修改成功');
+            }else{
+                return redirect()->back()->withInput()->withErrors('修改失败');
+            }
+
+
+
+        }else{
+            return view('zpadmin.personal.center',['basics'=>$basics]);
+        }
+
 
      }
 
@@ -140,7 +182,7 @@ class PersonalController extends Controller{
 
         unset($res['_token']);
         if($article->create($res)){
-            return redirect('yeyu/personal/classifylist')->with('status', '添加成功');
+            return redirect('yeyu/personal/articlelist')->with('status', '添加成功');
         }else{
             return redirect()->back()->withInput()->withErrors('添加失败');
         }
@@ -175,7 +217,8 @@ class PersonalController extends Controller{
      */
     public function Articlelist(Article $article){
         $articles = $article->getArticleAll();
-        $articles = $articles->toArray();
+//        dd($articles->toArray());
+//        $articles = $articles->toArray();
         return view('zpadmin.personal.articlelist',['articles'=>$articles]);
   }
 
@@ -201,16 +244,22 @@ class PersonalController extends Controller{
         );
         $category = unserialize(Cache::get('category'));
         $one = $article->getArticleOne($request->get('id'));
-        $one->content = EndaEditor::MarkDecode($one->content);
-       // $one->content  =htmlentities($one->content);
-        //dd($one);
-       
+        //$one->content = EndaEditor::MarkDecode($one->content);
         return view('zpadmin.personal.editarticle',['one'=>$one,'category'=>$category]);
         
         
     }
 
-
+    public function HandleEditArticle(ArticleRequest $request,Article $article){
+        $res = $request->all();
+        unset($res['_token']);
+        $cate = $article->find($request->id);
+        if($cate->update($res)){
+            return redirect('yeyu/personal/articlelist')->with('status', '修改成功');
+        }else{
+            return redirect()->back()->withInput()->withErrors('修改失败');
+        }
+    }
 
 
 }

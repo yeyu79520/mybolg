@@ -9,7 +9,7 @@
     <div class="panel admin-panel">
         <div class="panel-head" id="add"><strong><span class="icon-pencil-square-o"></span>增加内容</strong></div>
         <div class="body-content">
-            <form method="post" class="form-x" action="{{route('personal.handle_addcontent')}}">
+            <form method="post" class="form-x" action="{{route('personal.handle_editarticle')}}">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <input type="hidden" name="id" value="{{ $one->id }}">
                 <div class="form-group">
@@ -54,10 +54,11 @@
                     <div class="field">
                         {{--<textarea name="content" class="input" style="height:450px; border:1px solid #ddd;"></textarea>--}}
                         <textarea id='myEditor' name="content">
-                                {{ ($one->content)}}
+                                {{ $one->content}}
                        </textarea>
 
                         <div class="tips"></div>
+
                     </div>
                 </div>
 

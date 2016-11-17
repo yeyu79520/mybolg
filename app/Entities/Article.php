@@ -22,6 +22,6 @@ class Article extends Model
 
     }
     public function getArticleAll(){
-       return  $this->with('getCateTitle')->get();
+       return  $this->with('getCateTitle')->paginate(10);
     }
 }

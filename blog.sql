@@ -3,20 +3,20 @@ Navicat MySQL Data Transfer
 
 Source Server         : localhost
 Source Server Version : 50547
-Source Host           : localhost:3306
+Source Host           : 127.0.0.1:3306
 Source Database       : blog
 
 Target Server Type    : MYSQL
 Target Server Version : 50547
 File Encoding         : 65001
 
-Date: 2016-11-17 01:04:21
+Date: 2016-11-17 17:53:57
 */
 
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for article
+-- Table structure for `article`
 -- ----------------------------
 DROP TABLE IF EXISTS `article`;
 CREATE TABLE `article` (
@@ -31,15 +31,38 @@ CREATE TABLE `article` (
   PRIMARY KEY (`id`),
   KEY `id` (`id`) USING BTREE,
   KEY `title` (`title`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of article
 -- ----------------------------
-INSERT INTO `article` VALUES ('1', '我在测试', '25', '![][0.46741679430962646]我在测试看行不行\r\n\r\n  \r\n----------\r\n[0.46741679430962646]: http://127.0.0.1/laravel/public/path/534f259925a5a548c9d8f9dccb053f91.jpg', '2016-11-16 15:13:04', '2016-11-16 15:13:04', '1', '测试');
+INSERT INTO `article` VALUES ('1', '我在测试我来了', '25', '<p>今天天气很好\r\n你最北封\r\n没有什么不可以</p>\r\n                       ', '2016-11-17 13:39:13', '2016-11-16 15:13:04', '1', '测试');
+INSERT INTO `article` VALUES ('2', 'Js 大神来了', '26', '1. 就是这么拽\r\n哈哈哈不找到了吧', '2016-11-17 13:40:16', '2016-11-17 13:40:16', '0', 'Js闭包');
 
 -- ----------------------------
--- Table structure for category
+-- Table structure for `basic`
+-- ----------------------------
+DROP TABLE IF EXISTS `basic`;
+CREATE TABLE `basic` (
+  `id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) DEFAULT NULL COMMENT '网站标题',
+  `s_key` varchar(255) DEFAULT NULL COMMENT '网站关键字',
+  `friendship_link` text COMMENT '友情链接',
+  `domain_name` varchar(255) DEFAULT NULL COMMENT '域名',
+  `bottom_information` text COMMENT '底部信息',
+  `description` text COMMENT '网站描述',
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of basic
+-- ----------------------------
+INSERT INTO `basic` VALUES ('1', '夜雨79520', null, '', 'www.yeyu79520.cn', '', '', null, '2016-11-17 17:52:52');
+
+-- ----------------------------
+-- Table structure for `category`
 -- ----------------------------
 DROP TABLE IF EXISTS `category`;
 CREATE TABLE `category` (
@@ -62,7 +85,7 @@ INSERT INTO `category` VALUES ('27', 'Linux', '0', '运维，Linux', '2016-11-16
 INSERT INTO `category` VALUES ('28', 'Laravel', '0', 'Laravel', '2016-11-16 12:46:22', '2016-11-16 12:46:22', '4');
 
 -- ----------------------------
--- Table structure for users
+-- Table structure for `users`
 -- ----------------------------
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
