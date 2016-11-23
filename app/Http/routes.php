@@ -14,12 +14,18 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+
 Route::group(['namespace' => 'Test'], function()
 {
     // Controllers Within The "App\Http\Controllers\Admin" Namespace
 		Route::get('/test',['as' => 'test', 'uses' => 'TestController@index']);
    
 });
+
+
+
+
 Route::group(['namespace' => 'ZpAdmin','prefix' => 'yeyu','middleware'=>'auth'], function()
 {
     Route::get('personal/index',['as' => 'personal.index', 'uses' => 'PersonalController@index']);

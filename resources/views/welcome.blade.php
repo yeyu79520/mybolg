@@ -4,12 +4,12 @@
         <title>Laravel</title>
         <script src="http://lib.sinaapp.com/js/jquery/1.9.1/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="{{asset('js/layer/layer.js')}}"></script>
-  <script type="text/javascript">
- layer.msg('好不好', {
-  icon: 6,
-  time: 1000 //2秒关闭（如果不配置，默认是3秒）
-})
-  </script>      
+  {{--<script type="text/javascript">--}}
+ {{--layer.msg('好不好', {--}}
+  {{--icon: 6,--}}
+  {{--time: 1000 //2秒关闭（如果不配置，默认是3秒）--}}
+{{--})--}}
+  {{--</script>      --}}
 
         <style>
             html, body {
@@ -44,7 +44,7 @@
     <body>
         <div class="container">
             <div class="content">
-                <div class="title">Laravel 5</div>
+                <div class="title">夜雨79520 著</div>
             </div>
         </div>
     </body>
