@@ -4,8 +4,17 @@ use App\Http\Controllers\Controller;
  class TestController extends Controller{
 
  	function index(){
-	\Illuminate\Support\Facades\Session::put('MessagesStatus',2);
- 		return  view('test');
+ 		//echo __DIR__;
+ 		// echo dirname(dirname(dirname(dirname(__FILE__))));
+ 		$fp = fopen(__DIR__.'/data.txt', 'a');
+		  $time= time()."\r\n";
+		 fwrite($fp, $time);
+		
+		 fclose($fp);
+
+
+
+
  	}
 
 
